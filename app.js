@@ -11,7 +11,9 @@ window.addEventListener("load", (e) => {
     // on change of dropdown
     pokemonList.addEventListener("change", (e) => {
         showPokemonCard(e.target.value);
-    })    
+    })  
+    
+    registerServiceWorker();
 });
 
 async function getPokemonList() {
@@ -48,5 +50,15 @@ async function showPokemonCard(url) {
     const json = await response.json();
 
     pokemonCard.innerHTML = createCard(json);
+}
+
+async function registerServiceWorker() {
+    if ("serviceWorker" in navigator) {
+        try {
+            await navigator.serviceWorker.register("sw.js");
+        } catch (error) {
+            console.log("Failed: ", error);
+        }
+    }
 }
 
